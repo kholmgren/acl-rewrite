@@ -1,4 +1,4 @@
-package io.kettil.ast;
+package io.kettil.rewrite.parser.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonPropertyOrder({"@type", "object", "relation"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class TuplesetExpression extends RewriteExpression {
+public class TuplesetAst extends AbstractRewriteAst {
     private String object;
     private String relation;
 }

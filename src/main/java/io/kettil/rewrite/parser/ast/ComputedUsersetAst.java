@@ -1,4 +1,4 @@
-package io.kettil.ast;
+package io.kettil.rewrite.parser.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -6,15 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"@type", "name", "relations"})
+@JsonPropertyOrder({"@type", "object", "relation"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Namespace extends RewriteExpression {
-    private String name;
-    private final List<Relation> relations = new ArrayList<>();
+public class ComputedUsersetAst extends AbstractRewriteAst {
+    private String object;
+    private String relation;
 }

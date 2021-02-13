@@ -1,4 +1,4 @@
-package io.kettil.ast;
+package io.kettil.rewrite.parser.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"@type", "object", "relation"})
+@JsonPropertyOrder({"@type", "userset"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class ComputedUsersetExpression extends RewriteExpression {
-    private String object;
-    private String relation;
+public class ChildUsersetAst extends AbstractRewriteAst {
+    private AbstractRewriteAst userset;
 }

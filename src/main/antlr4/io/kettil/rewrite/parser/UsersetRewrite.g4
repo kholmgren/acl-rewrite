@@ -1,4 +1,4 @@
-grammar Rewrite;
+grammar UsersetRewrite;
 
 namespace
     : 'name' ':' namespaceName=STRING relation* EOF
