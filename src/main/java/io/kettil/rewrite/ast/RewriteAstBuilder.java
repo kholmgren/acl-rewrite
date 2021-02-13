@@ -1,11 +1,11 @@
-package io.kettil.rewrite.parser.ast;
+package io.kettil.rewrite.ast;
 
 import io.kettil.rewrite.parser.UsersetRewriteBaseVisitor;
 import io.kettil.rewrite.parser.UsersetRewriteParser;
 
-class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
+class RewriteAstBuilder extends UsersetRewriteBaseVisitor<RewriteAst> {
     @Override
-    public AbstractRewriteAst visitNamespace(UsersetRewriteParser.NamespaceContext ctx) {
+    public RewriteAst visitNamespace(UsersetRewriteParser.NamespaceContext ctx) {
         NamespaceAst namespace = new NamespaceAst();
 
         namespace.setName(unquote(ctx.namespaceName.getText()));
@@ -18,7 +18,7 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitRelation(UsersetRewriteParser.RelationContext ctx) {
+    public RewriteAst visitRelation(UsersetRewriteParser.RelationContext ctx) {
         RelationAst relation = new RelationAst();
         relation.setName(unquote(ctx.relationName.getText()));
 
@@ -31,22 +31,22 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitUsersetRewrite(UsersetRewriteParser.UsersetRewriteContext ctx) {
+    public RewriteAst visitUsersetRewrite(UsersetRewriteParser.UsersetRewriteContext ctx) {
         return new UsersetRewriteAst(visitUserset(ctx.userset()));
     }
 
     @Override
-    public AbstractRewriteAst visitUserset(UsersetRewriteParser.UsersetContext ctx) {
+    public RewriteAst visitUserset(UsersetRewriteParser.UsersetContext ctx) {
         return super.visitUserset(ctx);
     }
 
     @Override
-    public AbstractRewriteAst visitChildUserset(UsersetRewriteParser.ChildUsersetContext ctx) {
+    public RewriteAst visitChildUserset(UsersetRewriteParser.ChildUsersetContext ctx) {
         return new ChildUsersetAst(super.visitUserset(ctx.userset()));
     }
 
     @Override
-    public AbstractRewriteAst visitComputedUserset(UsersetRewriteParser.ComputedUsersetContext ctx) {
+    public RewriteAst visitComputedUserset(UsersetRewriteParser.ComputedUsersetContext ctx) {
         ComputedUsersetAst expression = new ComputedUsersetAst();
 
         if (ctx.objectRef().size() > 1)
@@ -84,19 +84,19 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitThisUserset(UsersetRewriteParser.ThisUsersetContext ctx) {
+    public RewriteAst visitThisUserset(UsersetRewriteParser.ThisUsersetContext ctx) {
         return new ThisUsersetAst();
     }
 
     @Override
-    public AbstractRewriteAst visitTupleToUserset(UsersetRewriteParser.TupleToUsersetContext ctx) {
+    public RewriteAst visitTupleToUserset(UsersetRewriteParser.TupleToUsersetContext ctx) {
         return new TupleToUsersetAst(
             (TuplesetAst) visitTupleset(ctx.tupleset()),
             (ComputedUsersetAst) visitComputedUserset(ctx.computedUserset()));
     }
 
     @Override
-    public AbstractRewriteAst visitTupleset(UsersetRewriteParser.TuplesetContext ctx) {
+    public RewriteAst visitTupleset(UsersetRewriteParser.TuplesetContext ctx) {
         TuplesetAst expression = new TuplesetAst();
 
         if (ctx.objectRef().size() > 1)
@@ -134,12 +134,12 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitSetOperationUserset(UsersetRewriteParser.SetOperationUsersetContext ctx) {
+    public RewriteAst visitSetOperationUserset(UsersetRewriteParser.SetOperationUsersetContext ctx) {
         return super.visitSetOperationUserset(ctx);
     }
 
     @Override
-    public AbstractRewriteAst visitUnionUserset(UsersetRewriteParser.UnionUsersetContext ctx) {
+    public RewriteAst visitUnionUserset(UsersetRewriteParser.UnionUsersetContext ctx) {
         UnionUsersetAst expression = new UnionUsersetAst();
 
         for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
@@ -150,7 +150,7 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitIntersectUserset(UsersetRewriteParser.IntersectUsersetContext ctx) {
+    public RewriteAst visitIntersectUserset(UsersetRewriteParser.IntersectUsersetContext ctx) {
         IntersectUsersetAst expression = new IntersectUsersetAst();
 
         for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
@@ -161,7 +161,7 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitExcludeUserset(UsersetRewriteParser.ExcludeUsersetContext ctx) {
+    public RewriteAst visitExcludeUserset(UsersetRewriteParser.ExcludeUsersetContext ctx) {
         ExcludeUsersetAst expression = new ExcludeUsersetAst();
 
         for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
@@ -172,12 +172,12 @@ class RewriteAstVisitor extends UsersetRewriteBaseVisitor<AbstractRewriteAst> {
     }
 
     @Override
-    public AbstractRewriteAst visitObjectRef(UsersetRewriteParser.ObjectRefContext ctx) {
+    public RewriteAst visitObjectRef(UsersetRewriteParser.ObjectRefContext ctx) {
         return super.visitObjectRef(ctx);
     }
 
     @Override
-    public AbstractRewriteAst visitRelationRef(UsersetRewriteParser.RelationRefContext ctx) {
+    public RewriteAst visitRelationRef(UsersetRewriteParser.RelationRefContext ctx) {
         return super.visitRelationRef(ctx);
     }
 

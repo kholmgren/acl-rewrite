@@ -1,4 +1,4 @@
-package io.kettil.rewrite.parser.ast;
+package io.kettil.rewrite.ast;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -25,7 +25,9 @@ import java.io.InputStream;
     @JsonSubTypes.Type(value = UnionUsersetAst.class, name = "union"),
     @JsonSubTypes.Type(value = UsersetRewriteAst.class, name = "userset_rewrite")
 })
-public abstract class AbstractRewriteAst {
+public abstract class RewriteAst {
+    public abstract <T> T visit(RewriteAstVisitor<T> visitor);
+
     public static NamespaceAst parse(String text) {
         return parse(CharStreams.fromString(text));
     }
@@ -38,7 +40,7 @@ public abstract class AbstractRewriteAst {
     private static NamespaceAst parse(CharStream input) {
         UsersetRewriteParser parser = new UsersetRewriteParser(new CommonTokenStream(new UsersetRewriteLexer(input)));
 
-        RewriteAstVisitor visitor = new RewriteAstVisitor();
+        RewriteAstBuilder visitor = new RewriteAstBuilder();
         return (NamespaceAst) visitor.visit(parser.namespace());
     }
 }

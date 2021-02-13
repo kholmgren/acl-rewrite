@@ -1,4 +1,4 @@
-package io.kettil.rewrite.parser.ast;
+package io.kettil.rewrite.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,9 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonPropertyOrder({"@type", "name", "userset_rewrite"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class RelationAst extends AbstractRewriteAst {
+public class RelationAst extends RewriteAst {
     private String name;
 
     @JsonProperty("userset_rewrite")
     private UsersetRewriteAst usersetRewrite;
+
+    @Override
+    public <T> T visit(RewriteAstVisitor<T> visitor) {
+        return visitor.visitRelationAst(this);
+    }
 }

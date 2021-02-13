@@ -1,4 +1,4 @@
-package io.kettil.rewrite.parser.ast;
+package io.kettil.rewrite.ast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ public class AbstractRewriteAstTest {
     public void parse() throws Exception {
         JsonNode expected = MAPPER.readTree(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"));
 
-        NamespaceAst namespace = AbstractRewriteAst.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
+        NamespaceAst namespace = RewriteAst.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
         JsonNode actual = MAPPER.convertValue(namespace, JsonNode.class);
 
         assertEquals(expected, actual);

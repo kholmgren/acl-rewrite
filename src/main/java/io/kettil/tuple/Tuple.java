@@ -1,6 +1,5 @@
 package io.kettil.tuple;
 
-import io.kettil.tuple.parser.TupleBaseListener;
 import io.kettil.tuple.parser.TupleLexer;
 import io.kettil.tuple.parser.TupleParser;
 import lombok.AllArgsConstructor;
@@ -17,73 +16,44 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tuple {
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Obj {
-        private String namespace;
-        private String objectId;
-    }
+    //    private TupleObject object;
+//    private String relation;
+    private TupleUserSet userSet;
+    private TupleUser user;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class UsrSet {
-        private Obj objectSet;
-        private String relation;
-    }
+//    public boolean isWild() {
+//        return object == null
+//            || object.isWild()
+//            || relation == null
+//            || user == null
+//            || user.isWild();
+//    }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Usr {
-        private String userId;
-        private UsrSet userSet;
-    }
-
-    private Obj object;
-    private String relation;
-    private Usr user;
-
-    private static class TupleListener extends TupleBaseListener {
-        private Obj object;
-        private String relation;
-        private Usr user;
-
-        public Tuple getTuple() {
-            return new Tuple(object, relation, user);
-        }
-
-        @Override
-        public void exitTuple(TupleParser.TupleContext ctx) {
-            object = new Obj(ctx.object().namespace().getText(), ctx.object().objectId().getText());
-            relation = ctx.relation().getText();
-            super.exitTuple(ctx);
-        }
-
-        @Override
-        public void exitUser(TupleParser.UserContext ctx) {
-            user = ctx.userId() != null
-                ? new Usr(ctx.userId().getText(), null)
-                : new Usr(null, new UsrSet(
-                new Obj(
-                    ctx.userset().object().namespace().getText(),
-                    ctx.userset().object().objectId().getText()),
-                ctx.userset().relation().getText()));
-
-            super.exitUser(ctx);
-        }
+    public boolean isWild() {
+        return userSet == null
+            || userSet.isWild()
+            || user == null
+            || user.isWild();
     }
 
     public static Tuple parse(String value) {
+        return parse(value, false);
+    }
+
+    public static Tuple parse(String value, boolean allowWild) {
         CharStream input = CharStreams.fromString(value);
 
         TupleParser parser = new TupleParser(new CommonTokenStream(new TupleLexer(input)));
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        TupleListener listener = new TupleListener();
+        TupleParseListener listener = new TupleParseListener();
         walker.walk(listener, parser.tuple());
 
-        return listener.getTuple();
+        Tuple tuple = listener.getTuple();
+
+        if (!allowWild && tuple.isWild())
+            throw new IllegalArgumentException("Wildcard is not allowed");
+
+        return tuple;
     }
 }

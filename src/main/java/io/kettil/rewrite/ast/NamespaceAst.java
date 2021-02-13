@@ -1,4 +1,4 @@
-package io.kettil.rewrite.parser.ast;
+package io.kettil.rewrite.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -14,7 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @JsonPropertyOrder({"@type", "name", "relations"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class NamespaceAst extends AbstractRewriteAst {
+public class NamespaceAst extends RewriteAst {
     private String name;
     private final List<RelationAst> relations = new ArrayList<>();
+
+    @Override
+    public <T> T visit(RewriteAstVisitor<T> visitor) {
+        return visitor.visitNamespaceAst(this);
+    }
 }
