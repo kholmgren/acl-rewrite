@@ -16,31 +16,19 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tuple {
-    //    private TupleObject object;
-//    private String relation;
-    private TupleUserSet userSet;
+    private TupleObject object;
+    private String relation;
     private TupleUser user;
 
-//    public boolean isWild() {
-//        return object == null
-//            || object.isWild()
-//            || relation == null
-//            || user == null
-//            || user.isWild();
-//    }
-
-    public boolean isWild() {
-        return userSet == null
-            || userSet.isWild()
-            || user == null
-            || user.isWild();
+    public static boolean isWild(Tuple tuple) {
+        return tuple.object == null
+            || tuple.object.isWild()
+            || tuple.relation == null
+            || tuple.user == null
+            || tuple.user.isWild();
     }
 
     public static Tuple parse(String value) {
-        return parse(value, false);
-    }
-
-    public static Tuple parse(String value, boolean allowWild) {
         CharStream input = CharStreams.fromString(value);
 
         TupleParser parser = new TupleParser(new CommonTokenStream(new TupleLexer(input)));
@@ -51,8 +39,8 @@ public class Tuple {
 
         Tuple tuple = listener.getTuple();
 
-        if (!allowWild && tuple.isWild())
-            throw new IllegalArgumentException("Wildcard is not allowed");
+        if (tuple.object == null || tuple.object.isWild() || tuple.relation == null)
+            throw new IllegalArgumentException("Tuple object or relation may not be null");
 
         return tuple;
     }

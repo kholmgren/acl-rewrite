@@ -4,39 +4,25 @@ import io.kettil.tuple.parser.TupleBaseListener;
 import io.kettil.tuple.parser.TupleParser;
 
 class TupleParseListener extends TupleBaseListener {
-    //    private TupleObject object;
-//    private String relation;
-    private TupleUserSet userSet;
+    private TupleObject object;
+    private String relation;
     private TupleUser user;
 
     Tuple getTuple() {
-//        return new Tuple(
-//            object,
-//            relation,
-//            user != null
-//                ? user
-//                : new TupleUser(null, new TupleUserSet(new TupleObject(), null)));
-
         return new Tuple(
-            userSet,
+            object,
+            relation,
             user != null
                 ? user
-                : new TupleUser(null, new TupleUserSet(new TupleObject(), null)));
-
+                : new TupleUser(null, new TupleUserset(new TupleObject(), null)));
     }
 
     @Override
     public void exitTuple(TupleParser.TupleContext ctx) {
-//        this.relation = ctx.relation() != null ? ctx.relation().getText() : null;
-//        this.object = new TupleObject(
-//            ctx.object().namespace() != null ? ctx.object().namespace().getText() : null,
-//            ctx.object().objectId() != null ? ctx.object().objectId().getText() : null);
-
-        this.userSet = new TupleUserSet(
-            new TupleObject(
-                ctx.object().namespace() != null ? ctx.object().namespace().getText() : null,
-                ctx.object().objectId() != null ? ctx.object().objectId().getText() : null),
-            ctx.relation() != null ? ctx.relation().getText() : null);
+        this.object = new TupleObject(
+            ctx.object().namespace() != null ? ctx.object().namespace().getText() : null,
+            ctx.object().objectId() != null ? ctx.object().objectId().getText() : null);
+        this.relation = ctx.relation() != null ? ctx.relation().getText() : null;
 
         super.exitTuple(ctx);
     }
@@ -44,7 +30,7 @@ class TupleParseListener extends TupleBaseListener {
     @Override
     public void exitUser(TupleParser.UserContext ctx) {
         String userId = null;
-        TupleUserSet userSet = null;
+        TupleUserset userSet = null;
 
         if (ctx.userId() != null)
             userId = ctx.userId().getText();
@@ -61,7 +47,7 @@ class TupleParseListener extends TupleBaseListener {
             if (ctx.userset().relation() != null)
                 relation = ctx.userset().relation().getText();
 
-            userSet = new TupleUserSet(new TupleObject(namespace, objectId), relation);
+            userSet = new TupleUserset(new TupleObject(namespace, objectId), relation);
         }
 
         user = new TupleUser(userId, userSet);

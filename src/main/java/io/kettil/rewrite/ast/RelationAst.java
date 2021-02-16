@@ -19,7 +19,7 @@ public class RelationAst extends RewriteAst {
     private UsersetRewriteAst usersetRewrite;
 
     @Override
-    public <T> T visit(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(RewriteAstVisitor<T> visitor) {
         return visitor.visitRelationAst(this);
     }
 }

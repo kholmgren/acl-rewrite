@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TupleUserSet {
+public class TupleUserset {
     private TupleObject object;
     private String relation;
 

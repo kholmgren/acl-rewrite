@@ -16,7 +16,7 @@ public class TupleToUsersetAst extends RewriteAst {
     private ComputedUsersetAst computedUserset;
 
     @Override
-    public <T> T visit(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(RewriteAstVisitor<T> visitor) {
         return visitor.visitTupleToUsersetAst(this);
     }
 }

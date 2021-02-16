@@ -15,7 +15,7 @@ import java.io.InputStream;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ChildUsersetAst.class, name = "child"),
     @JsonSubTypes.Type(value = ComputedUsersetAst.class, name = "computed_userset"),
-    @JsonSubTypes.Type(value = ExcludeUsersetAst.class, name = "minus"),
+    @JsonSubTypes.Type(value = ExcludeUsersetAst.class, name = "exclude"),
     @JsonSubTypes.Type(value = IntersectUsersetAst.class, name = "intersect"),
     @JsonSubTypes.Type(value = NamespaceAst.class, name = "namespace"),
     @JsonSubTypes.Type(value = RelationAst.class, name = "relation"),
@@ -26,7 +26,7 @@ import java.io.InputStream;
     @JsonSubTypes.Type(value = UsersetRewriteAst.class, name = "userset_rewrite")
 })
 public abstract class RewriteAst {
-    public abstract <T> T visit(RewriteAstVisitor<T> visitor);
+    public abstract <T> T accept(RewriteAstVisitor<T> visitor);
 
     public static NamespaceAst parse(String text) {
         return parse(CharStreams.fromString(text));

@@ -14,7 +14,7 @@ public class ExcludeUsersetAst extends RewriteAst {
     private final List<RewriteAst> children = new ArrayList<>();
 
     @Override
-    public <T> T visit(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(RewriteAstVisitor<T> visitor) {
         return visitor.visitExcludeUsersetAst(this);
     }
 }

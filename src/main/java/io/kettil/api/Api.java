@@ -1,7 +1,7 @@
 package io.kettil.api;
 
 import io.kettil.tuple.Tuple;
-import io.kettil.tuple.TupleUserSet;
+import io.kettil.tuple.TupleUserset;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class Api {
     public void write(Tuple tuple) {
         //TODO: optimistic concurrency
 
-        if (tuple.isWild())
+        if (Tuple.isWild(tuple))
             throw new IllegalArgumentException("Wildcard tuple is not allowed");
 
     }
@@ -137,7 +137,7 @@ public class Api {
      * @param userSet
      * @param userId
      */
-    public void check(TupleUserSet userSet, String userId /* boolean forModify, long zookie */) {
+    public void check(TupleUserset userSet, String userId /* boolean forModify, long zookie */) {
         //TODO: zookie
         //TODO: forModify -- check is different between mutating and reading
 
@@ -166,7 +166,7 @@ public class Api {
      *
      * @param userSet
      */
-    public void expand(TupleUserSet userSet /* long zookie */) {
+    public void expand(TupleUserset userSet /* long zookie */) {
         //TODO: zookie
     }
 }

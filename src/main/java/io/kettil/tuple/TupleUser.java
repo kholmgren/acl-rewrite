@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TupleUser {
     private String userId;
-    private TupleUserSet userSet;
+    private TupleUserset userSet;
 
     public boolean isWild() {
         return userId == null && userSet == null || userId == null && userSet.isWild();

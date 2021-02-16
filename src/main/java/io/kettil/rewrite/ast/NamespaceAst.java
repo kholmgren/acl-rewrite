@@ -19,7 +19,7 @@ public class NamespaceAst extends RewriteAst {
     private final List<RelationAst> relations = new ArrayList<>();
 
     @Override
-    public <T> T visit(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(RewriteAstVisitor<T> visitor) {
         return visitor.visitNamespaceAst(this);
     }
 }

@@ -15,19 +15,10 @@ public class TupleTest {
         };
 
         Tuple[] expected = {
-//            new Tuple(new TupleObject("doc", "readme"), "owner", new TupleUser("10", null)),
-//            new Tuple(new TupleObject("group", "eng"), "member", new TupleUser("11", null)),
-//            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserSet(new TupleObject("group", "eng"), "member"))),
-//            new Tuple(new TupleObject("doc", "readme"), "parent", new TupleUser(null, new TupleUserSet(new TupleObject("folder", "A"), "..."))),
-
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), "owner"),
-                new TupleUser("10", null)),
-            new Tuple(new TupleUserSet(new TupleObject("group", "eng"), "member"),
-                new TupleUser("11", null)),
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), "viewer"),
-                new TupleUser(null, new TupleUserSet(new TupleObject("group", "eng"), "member"))),
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), "parent"),
-                new TupleUser(null, new TupleUserSet(new TupleObject("folder", "A"), "..."))),
+            new Tuple(new TupleObject("doc", "readme"), "owner", new TupleUser("10", null)),
+            new Tuple(new TupleObject("group", "eng"), "member", new TupleUser("11", null)),
+            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject("group", "eng"), "member"))),
+            new Tuple(new TupleObject("doc", "readme"), "parent", new TupleUser(null, new TupleUserset(new TupleObject("folder", "A"), "..."))),
         };
 
         for (int i = 0; i < tuples.length; i++) {
@@ -45,20 +36,13 @@ public class TupleTest {
         };
 
         Tuple[] expected = {
-//            new Tuple(new TupleObject("doc", "readme"), null, new TupleUser(null, new TupleUserSet(new TupleObject(), null))),
-//            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserSet(new TupleObject(), null))),
-//            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserSet(new TupleObject("group", "eng"), null)))
-
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), null),
-                new TupleUser(null, new TupleUserSet(new TupleObject(), null))),
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), "viewer"),
-                new TupleUser(null, new TupleUserSet(new TupleObject(), null))),
-            new Tuple(new TupleUserSet(new TupleObject("doc", "readme"), "viewer"),
-                new TupleUser(null, new TupleUserSet(new TupleObject("group", "eng"), null)))
+            new Tuple(new TupleObject("doc", "readme"), null, new TupleUser(null, new TupleUserset(new TupleObject(), null))),
+            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject(), null))),
+            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject("group", "eng"), null)))
         };
 
         for (int i = 0; i < tuples.length; i++) {
-            Tuple tuple = Tuple.parse(tuples[i], true);
+            Tuple tuple = Tuple.parse(tuples[i]);
             assertEquals(expected[i], tuple);
         }
     }

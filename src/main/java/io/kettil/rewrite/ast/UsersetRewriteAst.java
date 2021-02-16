@@ -11,7 +11,7 @@ public class UsersetRewriteAst extends RewriteAst {
     private final RewriteAst userset;
 
     @Override
-    public <T> T visit(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(RewriteAstVisitor<T> visitor) {
         return visitor.visitUsersetRewriteAst(this);
     }
 }

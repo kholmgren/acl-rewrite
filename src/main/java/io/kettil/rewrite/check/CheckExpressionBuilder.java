@@ -2,10 +2,10 @@ package io.kettil.rewrite.check;
 
 import io.kettil.rewrite.ast.*;
 import io.kettil.rewrite.check.expression.CheckExpr;
-import io.kettil.tuple.TupleUserSet;
+import io.kettil.tuple.TupleUserset;
 
 public class CheckExpressionBuilder implements RewriteAstVisitor<CheckExpr> {
-    public static CheckExpr build(TupleUserSet userSet) {
+    public static CheckExpr build(TupleUserset userSet) {
         if (userSet.isWild())
             throw new IllegalArgumentException("Wildcard userSet is not allowed");
 
