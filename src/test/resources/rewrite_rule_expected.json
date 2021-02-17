@@ -1,64 +1,77 @@
 {
-  "@type" : "namespace",
-  "name" : "faas",
-  "relations" : [ {
-    "@type" : "relation",
-    "name" : "owner"
-  }, {
-    "@type" : "relation",
-    "name" : "editor",
-    "userset_rewrite" : {
-      "@type" : "userset_rewrite",
-      "userset" : {
-        "@type" : "union",
-        "children" : [ {
-          "@type" : "child",
-          "userset" : {
-            "@type" : "_this"
-          }
-        }, {
-          "@type" : "child",
-          "userset" : {
-            "@type" : "computed_userset",
-            "relation" : "owner"
-          }
-        } ]
-      }
-    }
-  }, {
-    "@type" : "relation",
-    "name" : "viewer",
-    "userset_rewrite" : {
-      "@type" : "userset_rewrite",
-      "userset" : {
-        "@type" : "union",
-        "children" : [ {
-          "@type" : "child",
-          "userset" : {
-            "@type" : "_this"
-          }
-        }, {
-          "@type" : "child",
-          "userset" : {
-            "@type" : "computed_userset",
-            "relation" : "editor"
-          }
-        }, {
-          "@type" : "child",
-          "userset" : {
-            "@type" : "tuple_to_userset",
-            "tupleset" : {
-              "@type" : "tupleset",
-              "relation" : "parent"
+  "@type": "namespace",
+  "name": "faas",
+  "relations": [
+    {
+      "@type": "relation",
+      "name": "owner"
+    },
+    {
+      "@type": "relation",
+      "name": "editor",
+      "userset_rewrite": {
+        "@type": "userset_rewrite",
+        "userset": {
+          "@type": "set_operation",
+          "op": "union",
+          "children": [
+            {
+              "@type": "child",
+              "userset": {
+                "@type": "_this"
+              }
             },
-            "computedUserset" : {
-              "@type" : "computed_userset",
-              "object" : "$TUPLE_USERSET_OBJECT",
-              "relation" : "viewer"
+            {
+              "@type": "child",
+              "userset": {
+                "@type": "computed_userset",
+                "relation": "owner"
+              }
             }
-          }
-        } ]
+          ]
+        }
+      }
+    },
+    {
+      "@type": "relation",
+      "name": "viewer",
+      "userset_rewrite": {
+        "@type": "userset_rewrite",
+        "userset": {
+          "@type": "set_operation",
+          "op": "union",
+          "children": [
+            {
+              "@type": "child",
+              "userset": {
+                "@type": "_this"
+              }
+            },
+            {
+              "@type": "child",
+              "userset": {
+                "@type": "computed_userset",
+                "relation": "editor"
+              }
+            },
+            {
+              "@type": "child",
+              "userset": {
+                "@type": "tuple_to_userset",
+                "tupleset": {
+                  "@type": "tupleset",
+                  "relation": "parent"
+                },
+                "computedUserset": {
+                  "@type": "computed_userset",
+                  "object": "$TUPLE_USERSET_OBJECT",
+                  "relation": "viewer"
+                }
+              }
+            }
+          ]
+        }
       }
     }
-  } ]
+  ]
 }

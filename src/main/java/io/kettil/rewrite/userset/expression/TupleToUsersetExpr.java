@@ -4,7 +4,6 @@ import lombok.Value;
 
 @Value
 public class TupleToUsersetExpr extends UsersetExpr {
-    Context context;
     TuplesetExpr tuplesetExpr;
     ComputedUsersetExpr computedUsersetExpr;
 

@@ -160,34 +160,8 @@ public class AstFactory {
 
         @Override
         public RewriteAst visitSetOperationUserset(UsersetRewriteParser.SetOperationUsersetContext ctx) {
-            return super.visitSetOperationUserset(ctx);
-        }
-
-        @Override
-        public RewriteAst visitUnionUserset(UsersetRewriteParser.UnionUsersetContext ctx) {
-            UnionUsersetAst expression = new UnionUsersetAst();
-
-            for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
-                expression.getChildren().add(visitUserset(i));
-            }
-
-            return expression;
-        }
-
-        @Override
-        public RewriteAst visitIntersectUserset(UsersetRewriteParser.IntersectUsersetContext ctx) {
-            IntersectUsersetAst expression = new IntersectUsersetAst();
-
-            for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
-                expression.getChildren().add(visitUserset(i));
-            }
-
-            return expression;
-        }
-
-        @Override
-        public RewriteAst visitExcludeUserset(UsersetRewriteParser.ExcludeUsersetContext ctx) {
-            ExcludeUsersetAst expression = new ExcludeUsersetAst();
+            SetOperationUsersetAst expression = new SetOperationUsersetAst();
+            expression.setOp(SetOperationUsersetAst.Op.valueOf(ctx.op.getText()));
 
             for (UsersetRewriteParser.UsersetContext i : ctx.userset()) {
                 expression.getChildren().add(visitUserset(i));

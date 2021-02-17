@@ -18,9 +18,5 @@ public interface RewriteAstVisitor<T> {
 
     T visitTuplesetAst(TuplesetAst ast);
 
-    T visitUnionUsersetAst(UnionUsersetAst ast);
-
-    T visitIntersectUsersetAst(IntersectUsersetAst ast);
-
-    T visitExcludeUsersetAst(ExcludeUsersetAst ast);
+    T visitSetOperationUsersetAst(SetOperationUsersetAst ast);
 }

@@ -9,11 +9,11 @@ public class UsersetExprFactoryTest {
 
     @Test
     public void build() throws Exception {
-//        NamespaceExpr expr = UsersetExprFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule_build_test.txt"));
-//
-////        TupleUserset userSet = new TupleUserset(new TupleObject("doc", "readme"), "viewer");
-//
-//
-//        System.out.println(MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(expr));
+        NamespaceExpr expr = UsersetExprFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule_build_test.txt"));
+
+//        TupleUserset userSet = new TupleUserset(new TupleObject("doc", "readme"), "viewer");
+
+
+        System.out.println(MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(expr));
     }
 }

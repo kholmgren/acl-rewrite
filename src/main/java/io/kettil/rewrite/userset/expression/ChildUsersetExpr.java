@@ -4,7 +4,6 @@ import lombok.Value;
 
 @Value
 public class ChildUsersetExpr extends UsersetExpr {
-    Context context;
     UsersetExpr usersetExpr;
 
     @Override

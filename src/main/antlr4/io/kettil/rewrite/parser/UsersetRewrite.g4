@@ -41,21 +41,7 @@ tupleset
     ;
 
 setOperationUserset
-    : intersectUserset 
-    | unionUserset
-    | excludeUserset
-    ;
-
-unionUserset
-    : 'union' '{' userset* '}'
-    ;
-
-intersectUserset
-    : 'intersect' '{' userset* '}'
-    ;
-
-excludeUserset
-    : 'exclude' '{' userset* '}'
+    : op=('union' | 'intersect' | 'exclude') '{' userset* '}'
     ;
 
 objectRef

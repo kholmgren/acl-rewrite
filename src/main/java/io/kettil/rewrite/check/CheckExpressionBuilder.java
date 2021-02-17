@@ -1,7 +1,7 @@
 package io.kettil.rewrite.check;
 
-import io.kettil.rewrite.userset.expression.parse.ast.*;
 import io.kettil.rewrite.check.expression.CheckExpr;
+import io.kettil.rewrite.userset.expression.parse.ast.*;
 import io.kettil.tuple.TupleUserset;
 
 public class CheckExpressionBuilder implements RewriteAstVisitor<CheckExpr> {
@@ -53,17 +53,7 @@ public class CheckExpressionBuilder implements RewriteAstVisitor<CheckExpr> {
     }
 
     @Override
-    public CheckExpr visitUnionUsersetAst(UnionUsersetAst ast) {
-        return null;
-    }
-
-    @Override
-    public CheckExpr visitIntersectUsersetAst(IntersectUsersetAst ast) {
-        return null;
-    }
-
-    @Override
-    public CheckExpr visitExcludeUsersetAst(ExcludeUsersetAst ast) {
+    public CheckExpr visitSetOperationUsersetAst(SetOperationUsersetAst ast) {
         return null;
     }
 }

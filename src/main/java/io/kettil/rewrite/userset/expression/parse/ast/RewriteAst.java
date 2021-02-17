@@ -7,14 +7,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ChildUsersetAst.class, name = "child"),
     @JsonSubTypes.Type(value = ComputedUsersetAst.class, name = "computed_userset"),
-    @JsonSubTypes.Type(value = ExcludeUsersetAst.class, name = "exclude"),
-    @JsonSubTypes.Type(value = IntersectUsersetAst.class, name = "intersect"),
     @JsonSubTypes.Type(value = NamespaceAst.class, name = "namespace"),
     @JsonSubTypes.Type(value = RelationAst.class, name = "relation"),
+    @JsonSubTypes.Type(value = SetOperationUsersetAst.class, name = "set_operation"),
     @JsonSubTypes.Type(value = ThisUsersetAst.class, name = "_this"),
     @JsonSubTypes.Type(value = TuplesetAst.class, name = "tupleset"),
     @JsonSubTypes.Type(value = TupleToUsersetAst.class, name = "tuple_to_userset"),
-    @JsonSubTypes.Type(value = UnionUsersetAst.class, name = "union"),
     @JsonSubTypes.Type(value = UsersetRewriteAst.class, name = "userset_rewrite")
 })
 public abstract class RewriteAst {

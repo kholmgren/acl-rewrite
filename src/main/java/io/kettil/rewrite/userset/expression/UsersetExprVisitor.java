@@ -9,11 +9,7 @@ public interface UsersetExprVisitor<T> {
 
     T visitThisUsersetExpr(ThisUsersetExpr expr);
 
-    T visitUnionUsersetExpr(UnionUsersetExpr expr);
-
-    T visitIntersectUsersetExpr(IntersectUsersetExpr expr);
-
-    T visitExcludeUsersetExpr(ExcludeUsersetExpr expr);
+    T visitSetOperationExpr(SetOperationExpr setOperationExpr);
 
     T visitTuplesetExpr(TuplesetExpr expr);
 

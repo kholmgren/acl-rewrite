@@ -2,7 +2,6 @@ package io.kettil.rewrite.userset.expression;
 
 import lombok.Value;
 
-import java.util.List;
 import java.util.Map;
 
 @Value

@@ -5,12 +5,18 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-public class UnionUsersetExpr extends UsersetExpr {
-    Context context;
+public class SetOperationExpr extends UsersetExpr {
+    public enum Op {
+        Union,
+        Intersect,
+        Exclude
+    }
+
+    Op op;
     List<UsersetExpr> children;
 
     @Override
     public <T> T accept(UsersetExprVisitor<T> visitor) {
-        return visitor.visitUnionUsersetExpr(this);
+        return visitor.visitSetOperationExpr(this);
     }
 }

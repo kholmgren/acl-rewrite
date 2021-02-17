@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,81 +28,87 @@ public class UsersetExprFactory {
     }
 
     private static class Visitor implements RewriteAstVisitor<UsersetExpr> {
-        private UsersetExpr.Context context;
+        private String namespace;
+        private String relation;
 
         @Override
         public NamespaceExpr visitNamespaceAst(NamespaceAst ast) {
-            context = new UsersetExpr.Context(ast.getName(), null);
+            namespace = ast.getName();
 
             Map<String, UsersetExpr> relations = new LinkedHashMap<>();
             for (RelationAst r : ast.getRelations()) {
                 UsersetExpr rel = visitRelationAst(r);
-                relations.put(context.getRelation(), rel);
+                relations.put(relation, rel);
             }
 
-            return new NamespaceExpr(context.getNamespace(), relations); //TODO: NamespaceExpr really necessary?
+            return new NamespaceExpr(namespace, relations); //TODO: NamespaceExpr really necessary?
         }
 
         @Override
         public UsersetExpr visitRelationAst(RelationAst ast) {
-            context = new UsersetExpr.Context(context.getNamespace(), ast.getName());
+            relation = ast.getName();
             return visitUsersetRewriteAst(ast.getUsersetRewrite());
         }
 
         @Override
         public UsersetExpr visitUsersetRewriteAst(UsersetRewriteAst ast) {
-            if (ast == null) {
-                return new ChildUsersetExpr(context, new ThisUsersetExpr(context));
-            } else
-                return ast.getUserset().accept(this);
+            return ast == null
+                ? new ChildUsersetExpr(new ThisUsersetExpr())
+                : ast.getUserset().accept(this);
         }
 
         @Override
         public ChildUsersetExpr visitChildUsersetAst(ChildUsersetAst ast) {
-            return new ChildUsersetExpr(context, ast.getUserset().accept(this));
+            return new ChildUsersetExpr(ast.getUserset().accept(this));
         }
 
         @Override
         public ComputedUsersetExpr visitComputedUsersetAst(ComputedUsersetAst ast) {
-            return new ComputedUsersetExpr(context, ast.getObject(), ast.getRelation());
+            return new ComputedUsersetExpr(ast.getObject(), ast.getRelation());
         }
 
         @Override
         public ThisUsersetExpr visitThisUsersetAst(ThisUsersetAst ast) {
-            return new ThisUsersetExpr(context);
+            return new ThisUsersetExpr();
         }
 
         @Override
         public TupleToUsersetExpr visitTupleToUsersetAst(TupleToUsersetAst ast) {
-            return new TupleToUsersetExpr(context,
+            return new TupleToUsersetExpr(
                 visitTuplesetAst(ast.getTupleset()),
                 visitComputedUsersetAst(ast.getComputedUserset()));
         }
 
         @Override
         public TuplesetExpr visitTuplesetAst(TuplesetAst ast) {
-            return new TuplesetExpr(context, ast.getObject(), ast.getRelation());
+            return new TuplesetExpr(ast.getObject(), ast.getRelation());
         }
 
-        @Override
-        public UnionUsersetExpr visitUnionUsersetAst(UnionUsersetAst ast) {
-            return new UnionUsersetExpr(context, ast.getChildren().stream()
+        private SetOperationExpr newSetOperationExpr(SetOperationExpr.Op operation, List<RewriteAst> children) {
+            return new SetOperationExpr(operation, children.stream()
                 .map(i -> i.accept(this))
                 .collect(Collectors.toList()));
         }
 
         @Override
-        public IntersectUsersetExpr visitIntersectUsersetAst(IntersectUsersetAst ast) {
-            return new IntersectUsersetExpr(context, ast.getChildren().stream()
-                .map(i -> i.accept(this))
-                .collect(Collectors.toList()));
-        }
+        public UsersetExpr visitSetOperationUsersetAst(SetOperationUsersetAst ast) {
+            SetOperationExpr.Op operation;
 
-        @Override
-        public ExcludeUsersetExpr visitExcludeUsersetAst(ExcludeUsersetAst ast) {
-            return new ExcludeUsersetExpr(context, ast.getChildren().stream()
-                .map(i -> i.accept(this))
-                .collect(Collectors.toList()));
+            switch (ast.getOp()) {
+                case union:
+                    operation = SetOperationExpr.Op.Union;
+                    break;
+                case intersect:
+                    operation = SetOperationExpr.Op.Intersect;
+                    break;
+                case exclude:
+                    operation = SetOperationExpr.Op.Exclude;
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
+
+            return newSetOperationExpr(operation, ast.getChildren());
         }
     }
 }
