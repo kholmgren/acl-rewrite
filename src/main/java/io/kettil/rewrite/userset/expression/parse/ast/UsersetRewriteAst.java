@@ -1,4 +1,4 @@
-package io.kettil.rewrite.ast;
+package io.kettil.rewrite.userset.expression.parse.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

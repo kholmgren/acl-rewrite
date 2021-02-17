@@ -1,4 +1,4 @@
-package io.kettil.rewrite.ast;
+package io.kettil.rewrite.userset.expression.parse.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -9,14 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"@type", "object", "relation"})
+@JsonPropertyOrder({"@type", "userset"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class TuplesetAst extends RewriteAst {
-    private String object;
-    private String relation;
+public class ChildUsersetAst extends RewriteAst {
+    private RewriteAst userset;
 
     @Override
     public <T> T accept(RewriteAstVisitor<T> visitor) {
-        return visitor.visitTuplesetAst(this);
+        return visitor.visitChildUsersetAst(this);
     }
 }

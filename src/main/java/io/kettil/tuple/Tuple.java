@@ -39,8 +39,7 @@ public class Tuple {
 
         Tuple tuple = listener.getTuple();
 
-        if (tuple.object == null || tuple.object.isWild() || tuple.relation == null)
-            throw new IllegalArgumentException("Tuple object or relation may not be null");
+        //TODO: validation here or elsewhere?
 
         return tuple;
     }

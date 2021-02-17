@@ -1,6 +1,6 @@
 package io.kettil.rewrite.check;
 
-import io.kettil.rewrite.ast.*;
+import io.kettil.rewrite.userset.expression.parse.ast.*;
 import io.kettil.rewrite.check.expression.CheckExpr;
 import io.kettil.tuple.TupleUserset;
 

@@ -1,4 +1,4 @@
-package io.kettil.rewrite.ast;
+package io.kettil.rewrite.userset.expression.parse.ast;
 
 public interface RewriteAstVisitor<T> {
 

@@ -1,20 +1,32 @@
-package io.kettil.rewrite.userset.expression;
+package io.kettil.rewrite.userset;
 
-import io.kettil.rewrite.ast.*;
+import io.kettil.rewrite.userset.expression.*;
+import io.kettil.rewrite.userset.expression.parse.AstFactory;
+import io.kettil.rewrite.userset.expression.parse.ast.*;
 import lombok.Data;
+import lombok.SneakyThrows;
 
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Data
-public class UsersetExpressionBuilder {
-    public static NamespaceExpr build(NamespaceAst ast) {
-        return new Builder().visitNamespaceAst(ast);
+public class UsersetExprFactory {
+    public static NamespaceExpr parse(NamespaceAst ast) {
+        return new Visitor().visitNamespaceAst(ast);
     }
 
-    private static class Builder implements RewriteAstVisitor<UsersetExpr> {
+    public static NamespaceExpr parse(String text) {
+        return new Visitor().visitNamespaceAst(AstFactory.parse(text));
+    }
+
+    @SneakyThrows
+    public static NamespaceExpr parse(InputStream inputStream) {
+        return new Visitor().visitNamespaceAst(AstFactory.parse(inputStream));
+    }
+
+    private static class Visitor implements RewriteAstVisitor<UsersetExpr> {
         private UsersetExpr.Context context;
 
         @Override

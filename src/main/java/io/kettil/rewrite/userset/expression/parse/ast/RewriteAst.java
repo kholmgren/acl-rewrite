@@ -1,15 +1,7 @@
-package io.kettil.rewrite.ast;
+package io.kettil.rewrite.userset.expression.parse.ast;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.kettil.rewrite.parser.UsersetRewriteLexer;
-import io.kettil.rewrite.parser.UsersetRewriteParser;
-import lombok.SneakyThrows;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-
-import java.io.InputStream;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 @JsonSubTypes({
@@ -27,20 +19,4 @@ import java.io.InputStream;
 })
 public abstract class RewriteAst {
     public abstract <T> T accept(RewriteAstVisitor<T> visitor);
-
-    public static NamespaceAst parse(String text) {
-        return parse(CharStreams.fromString(text));
-    }
-
-    @SneakyThrows
-    public static NamespaceAst parse(InputStream inputStream) {
-        return parse(CharStreams.fromStream(inputStream));
-    }
-
-    private static NamespaceAst parse(CharStream input) {
-        UsersetRewriteParser parser = new UsersetRewriteParser(new CommonTokenStream(new UsersetRewriteLexer(input)));
-
-        RewriteAstBuilder visitor = new RewriteAstBuilder();
-        return (NamespaceAst) visitor.visit(parser.namespace());
-    }
 }
