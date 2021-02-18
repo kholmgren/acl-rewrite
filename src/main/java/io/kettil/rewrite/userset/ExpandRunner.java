@@ -1,9 +1,9 @@
 package io.kettil.rewrite.userset;
 
-import io.kettil.rewrite.userset.expression.UsersetExpr;
+import io.kettil.rewrite.userset.expression.NamespaceExpr;
 
 public class ExpandRunner {
-    public Object expand(UsersetExpr expr, String objectId) { //TODO: a specific ExpandExpr? Should still be able to execute a check.
+    public Object expand(NamespaceExpr expr, String objectId, AclRepo repo) {
         throw new RuntimeException("Not implemented");  //TODO: implement
     }
 }

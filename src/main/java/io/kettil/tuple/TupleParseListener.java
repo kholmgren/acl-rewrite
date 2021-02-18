@@ -3,26 +3,23 @@ package io.kettil.tuple;
 import io.kettil.tuple.parser.TupleBaseListener;
 import io.kettil.tuple.parser.TupleParser;
 
+import static io.kettil.tuple.Tuple.ANY;
+
 class TupleParseListener extends TupleBaseListener {
     private TupleObject object;
-    private String relation;
-    private TupleUser user;
+    private String relation = ANY;
+    private TupleUser user = new TupleUser(ANY, null);
 
     Tuple getTuple() {
-        return new Tuple(
-            object,
-            relation,
-            user != null
-                ? user
-                : new TupleUser(null, new TupleUserset(new TupleObject(), null)));
+        return new Tuple(object, relation, user);
     }
 
     @Override
     public void exitTuple(TupleParser.TupleContext ctx) {
         this.object = new TupleObject(
-            ctx.object().namespace() != null ? ctx.object().namespace().getText() : null,
-            ctx.object().objectId() != null ? ctx.object().objectId().getText() : null);
-        this.relation = ctx.relation() != null ? ctx.relation().getText() : null;
+            ctx.object().namespace() != null ? ctx.object().namespace().getText() : ANY,
+            ctx.object().objectId() != null ? ctx.object().objectId().getText() : ANY);
+        this.relation = ctx.relation() != null ? ctx.relation().getText() : ANY;
 
         super.exitTuple(ctx);
     }
@@ -35,9 +32,9 @@ class TupleParseListener extends TupleBaseListener {
         if (ctx.userId() != null)
             userId = ctx.userId().getText();
         else {
-            String namespace = null;
-            String objectId = null;
-            String relation = null;
+            String namespace = ANY;
+            String objectId = ANY;
+            String relation = ANY;
 
             if (ctx.userset().object() != null) {
                 namespace = ctx.userset().object().namespace().getText();

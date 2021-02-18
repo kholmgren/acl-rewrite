@@ -6,9 +6,6 @@ import io.kettil.tuple.TupleUserset;
 
 public class CheckExpressionBuilder implements RewriteAstVisitor<CheckExpr> {
     public static CheckExpr build(TupleUserset userSet) {
-        if (userSet.isWild())
-            throw new IllegalArgumentException("Wildcard userSet is not allowed");
-
         return null;
     }
 

@@ -2,10 +2,7 @@ package io.kettil.tuple;
 
 import io.kettil.tuple.parser.TupleLexer;
 import io.kettil.tuple.parser.TupleParser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -16,16 +13,18 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tuple {
+    public static final String ANY = "*";
+
+    @NonNull
     private TupleObject object;
+    @NonNull
     private String relation;
+    @NonNull
     private TupleUser user;
 
-    public static boolean isWild(Tuple tuple) {
-        return tuple.object == null
-            || tuple.object.isWild()
-            || tuple.relation == null
-            || tuple.user == null
-            || tuple.user.isWild();
+    @Override
+    public String toString() {
+        return String.format("%s#%s@%s", object, relation, user);
     }
 
     public static Tuple parse(String value) {

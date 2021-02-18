@@ -28,7 +28,7 @@ public class TupleTest {
     }
 
     @Test
-    public void parseWild() {
+    public void parseAny() {
         String[] tuples = {
             "doc:readme",
             "doc:readme#viewer",
@@ -36,13 +36,15 @@ public class TupleTest {
         };
 
         Tuple[] expected = {
-            new Tuple(new TupleObject("doc", "readme"), null, new TupleUser(null, new TupleUserset(new TupleObject(), null))),
-            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject(), null))),
-            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject("group", "eng"), null)))
+            new Tuple(new TupleObject("doc", "readme"), "*", new TupleUser("*", null)),
+            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser("*", null)),
+            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject("group", "eng"), "*")))
         };
 
         for (int i = 0; i < tuples.length; i++) {
+            System.out.print(tuples[i]);
             Tuple tuple = Tuple.parse(tuples[i]);
+            System.out.println("=" + tuple);
             assertEquals(expected[i], tuple);
         }
     }

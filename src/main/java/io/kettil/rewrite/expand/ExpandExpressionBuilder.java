@@ -5,9 +5,6 @@ import io.kettil.tuple.TupleUserset;
 
 public class ExpandExpressionBuilder {
     public static ExpandExpr build(TupleUserset userSet) {
-        if (userSet.isWild())
-            throw new IllegalArgumentException("Wildcard userSet is not allowed");
-
         return null;
     }
 }

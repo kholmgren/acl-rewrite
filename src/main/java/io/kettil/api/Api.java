@@ -89,9 +89,6 @@ public class Api {
     public void write(Tuple tuple) {
         //TODO: optimistic concurrency
 
-        if (Tuple.isWild(tuple))
-            throw new IllegalArgumentException("Wildcard tuple is not allowed");
-
     }
 
     /**
@@ -140,9 +137,6 @@ public class Api {
     public void check(TupleUserset userSet, String userId /* boolean forModify, long zookie */) {
         //TODO: zookie
         //TODO: forModify -- check is different between mutating and reading
-
-        if (userSet.isWild())
-            throw new IllegalArgumentException("Wildcard userset is not allowed");
 
         //TODO: rewrite usersets
 
