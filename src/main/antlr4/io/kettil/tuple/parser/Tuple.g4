@@ -2,8 +2,6 @@ grammar Tuple;
 
 tuple
     : object '#' relation '@' user EOF
-    | object '#' relation EOF //For wildcard
-    | object EOF //For wildcard
     ;
 
 object
@@ -16,23 +14,22 @@ user
 
 userset
     : object '#' relation
-    | object EOF //For wildcard
     ;
 
 namespace
-    : IDENTIFIER
+    : name=IDENTIFIER
     ;
 
 objectId
-    : IDENTIFIER
+    : id=IDENTIFIER
     ;
 
 relation
-    : IDENTIFIER
+    : name=IDENTIFIER
     ;
 
 userId
-    : IDENTIFIER
+    : id=IDENTIFIER
     ;
 
 IDENTIFIER

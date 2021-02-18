@@ -2,10 +2,9 @@ package io.kettil.rewrite.check;
 
 import io.kettil.rewrite.check.expression.CheckExpr;
 import io.kettil.rewrite.userset.expression.parse.ast.*;
-import io.kettil.tuple.TupleUserset;
 
 public class CheckExpressionBuilder implements RewriteAstVisitor<CheckExpr> {
-    public static CheckExpr build(TupleUserset userSet) {
+    public static CheckExpr build(String namespace, String objectId, String relation, String userId) {
         return null;
     }
 

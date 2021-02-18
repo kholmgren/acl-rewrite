@@ -2,53 +2,35 @@ package io.kettil.tuple;
 
 import io.kettil.tuple.parser.TupleBaseListener;
 import io.kettil.tuple.parser.TupleParser;
+import lombok.Data;
 
-import static io.kettil.tuple.Tuple.ANY;
-
+@Data
 class TupleParseListener extends TupleBaseListener {
-    private TupleObject object;
-    private String relation = ANY;
-    private TupleUser user = new TupleUser(ANY, null);
+    private String objectNamespace;
+    private String objectId;
+    private String relation;
 
-    Tuple getTuple() {
-        return new Tuple(object, relation, user);
-    }
+    private String userId;
+
+    private String usersetNamespace;
+    private String usersetObjectId;
+    private String usersetRelation;
 
     @Override
     public void exitTuple(TupleParser.TupleContext ctx) {
-        this.object = new TupleObject(
-            ctx.object().namespace() != null ? ctx.object().namespace().getText() : ANY,
-            ctx.object().objectId() != null ? ctx.object().objectId().getText() : ANY);
-        this.relation = ctx.relation() != null ? ctx.relation().getText() : ANY;
-
-        super.exitTuple(ctx);
+        objectNamespace = ctx.object().namespace().getText();
+        objectId = ctx.object().objectId().getText();
+        relation = ctx.relation().getText();
     }
 
     @Override
     public void exitUser(TupleParser.UserContext ctx) {
-        String userId = null;
-        TupleUserset userSet = null;
-
         if (ctx.userId() != null)
             userId = ctx.userId().getText();
         else {
-            String namespace = ANY;
-            String objectId = ANY;
-            String relation = ANY;
-
-            if (ctx.userset().object() != null) {
-                namespace = ctx.userset().object().namespace().getText();
-                objectId = ctx.userset().object().objectId().getText();
-            }
-
-            if (ctx.userset().relation() != null)
-                relation = ctx.userset().relation().getText();
-
-            userSet = new TupleUserset(new TupleObject(namespace, objectId), relation);
+            usersetNamespace = ctx.userset().object().namespace().getText();
+            usersetObjectId = ctx.userset().object().objectId().getText();
+            usersetRelation = ctx.userset().relation().getText();
         }
-
-        user = new TupleUser(userId, userSet);
-
-        super.exitUser(ctx);
     }
 }

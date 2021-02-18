@@ -1,7 +1,7 @@
 package io.kettil.rewrite.userset.expression;
 
 public interface UsersetExprVisitor<T> {
-    T visitNamespaceExpr(NamespaceExpr expr);
+    T visitNamespaceExpr(NamespaceUsersetExpr expr);
 
     T visitChildUsersetExpr(ChildUsersetExpr expr);
 
@@ -9,7 +9,7 @@ public interface UsersetExprVisitor<T> {
 
     T visitThisUsersetExpr(ThisUsersetExpr expr);
 
-    T visitSetOperationExpr(SetOperationExpr setOperationExpr);
+    T visitSetOperationExpr(SetOperationUsersetExpr setOperationExpr);
 
     T visitTuplesetExpr(TuplesetExpr expr);
 

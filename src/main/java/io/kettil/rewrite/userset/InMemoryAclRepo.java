@@ -1,13 +1,14 @@
 package io.kettil.rewrite.userset;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.kettil.rewrite.userset.expression.NamespaceExpr;
+import io.kettil.AclRepo;
+import io.kettil.rewrite.userset.expression.NamespaceUsersetExpr;
 import io.kettil.tuple.Tuple;
 import lombok.SneakyThrows;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class InMemoryAclRepo implements AclRepo {
     private final static ObjectMapper MAPPER = new ObjectMapper().findAndRegisterModules();
@@ -16,17 +17,17 @@ public class InMemoryAclRepo implements AclRepo {
 
     @SneakyThrows
     @Override
-    public NamespaceExpr getNamespaceConfig(String name) {
+    public NamespaceUsersetExpr getNamespaceConfig(String name) {
         String json = namespaces.get(name);
         if (json == null)
             return null;
 
-        return MAPPER.readValue(json, NamespaceExpr.class);
+        return MAPPER.readValue(json, NamespaceUsersetExpr.class);
     }
 
     @SneakyThrows
     @Override
-    public void saveNamespaceConfig(NamespaceExpr namespaceExpr) {
+    public void saveNamespaceConfig(NamespaceUsersetExpr namespaceExpr) {
         String json = MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(namespaceExpr);
         namespaces.put(namespaceExpr.getName(), json);
     }
@@ -37,12 +38,12 @@ public class InMemoryAclRepo implements AclRepo {
     }
 
     @Override
-    public List<Tuple> getTuplesByObjectId(String namespace, String objectId) {
+    public Set<String> getUsersByObjectIdAndRelation(String namespace, String objectId, String relation) {
         return null;
     }
 
     @Override
-    public List<Tuple> getTuplesByObjectIdAndRelation(String namespace, String objectId, String relation) {
+    public Set<Tuple> getTuplesByObjectIdAndRelation(String namespace, String objectId, String relation) {
         return null;
     }
 

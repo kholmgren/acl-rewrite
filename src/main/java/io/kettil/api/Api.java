@@ -1,7 +1,6 @@
 package io.kettil.api;
 
 import io.kettil.tuple.Tuple;
-import io.kettil.tuple.TupleUserset;
 
 import java.util.List;
 
@@ -131,15 +130,18 @@ public class Api {
      * will be greater than that of the ACL updates that protect the
      * new content (§2.2).
      *
-     * @param userSet
+     * @param namespace
+     * @param objectId
+     * @param relation
      * @param userId
      */
-    public void check(TupleUserset userSet, String userId /* boolean forModify, long zookie */) {
+    public boolean check(String namespace, String objectId, String relation, String userId /* boolean forModify, long zookie */) {
         //TODO: zookie
         //TODO: forModify -- check is different between mutating and reading
 
         //TODO: rewrite usersets
 
+        return false;
     }
 
 
@@ -158,9 +160,11 @@ public class Api {
      * which allows them to build efficient search indices for
      * access-controlled content.
      *
-     * @param userSet
+     * @param namespace
+     * @param objectId
+     * @param relation
      */
-    public void expand(TupleUserset userSet /* long zookie */) {
+    public void expand(String namespace, String objectId, String relation /* long zookie */) {
         //TODO: zookie
     }
 }

@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ChildUsersetExpr.class, name = "child"),
     @JsonSubTypes.Type(value = ComputedUsersetExpr.class, name = "computed_userset"),
-    @JsonSubTypes.Type(value = NamespaceExpr.class, name = "namespace"),
-    @JsonSubTypes.Type(value = SetOperationExpr.class, name = "set_operation"),
+    @JsonSubTypes.Type(value = NamespaceUsersetExpr.class, name = "namespace"),
+    @JsonSubTypes.Type(value = SetOperationUsersetExpr.class, name = "set_operation"),
     @JsonSubTypes.Type(value = ThisUsersetExpr.class, name = "this"),
     @JsonSubTypes.Type(value = TuplesetExpr.class, name = "tupleset"),
     @JsonSubTypes.Type(value = TupleToUsersetExpr.class, name = "tuple_to_userset"),

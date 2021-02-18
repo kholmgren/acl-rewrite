@@ -14,16 +14,16 @@ import java.util.stream.Collectors;
 
 @Data
 public class UsersetExprFactory {
-    public static NamespaceExpr parse(NamespaceAst ast) {
+    public static NamespaceUsersetExpr parse(NamespaceAst ast) {
         return new Visitor().visitNamespaceAst(ast);
     }
 
-    public static NamespaceExpr parse(String text) {
+    public static NamespaceUsersetExpr parse(String text) {
         return new Visitor().visitNamespaceAst(AstFactory.parse(text));
     }
 
     @SneakyThrows
-    public static NamespaceExpr parse(InputStream inputStream) {
+    public static NamespaceUsersetExpr parse(InputStream inputStream) {
         return new Visitor().visitNamespaceAst(AstFactory.parse(inputStream));
     }
 
@@ -32,7 +32,7 @@ public class UsersetExprFactory {
         private String relation;
 
         @Override
-        public NamespaceExpr visitNamespaceAst(NamespaceAst ast) {
+        public NamespaceUsersetExpr visitNamespaceAst(NamespaceAst ast) {
             namespace = ast.getName();
 
             Map<String, UsersetExpr> relations = new LinkedHashMap<>();
@@ -41,7 +41,7 @@ public class UsersetExprFactory {
                 relations.put(relation, rel);
             }
 
-            return new NamespaceExpr(namespace, relations); //TODO: NamespaceExpr really necessary?
+            return new NamespaceUsersetExpr(namespace, relations); //TODO: NamespaceExpr really necessary?
         }
 
         @Override
@@ -84,25 +84,25 @@ public class UsersetExprFactory {
             return new TuplesetExpr(ast.getObject(), ast.getRelation());
         }
 
-        private SetOperationExpr newSetOperationExpr(SetOperationExpr.Op operation, List<RewriteAst> children) {
-            return new SetOperationExpr(operation, children.stream()
+        private SetOperationUsersetExpr newSetOperationExpr(SetOperationUsersetExpr.Op operation, List<RewriteAst> children) {
+            return new SetOperationUsersetExpr(operation, children.stream()
                 .map(i -> i.accept(this))
                 .collect(Collectors.toList()));
         }
 
         @Override
         public UsersetExpr visitSetOperationUsersetAst(SetOperationUsersetAst ast) {
-            SetOperationExpr.Op operation;
+            SetOperationUsersetExpr.Op operation;
 
             switch (ast.getOp()) {
                 case union:
-                    operation = SetOperationExpr.Op.Union;
+                    operation = SetOperationUsersetExpr.Op.Union;
                     break;
                 case intersect:
-                    operation = SetOperationExpr.Op.Intersect;
+                    operation = SetOperationUsersetExpr.Op.Intersect;
                     break;
                 case exclude:
-                    operation = SetOperationExpr.Op.Exclude;
+                    operation = SetOperationUsersetExpr.Op.Exclude;
                     break;
                 default:
                     throw new IllegalStateException();
