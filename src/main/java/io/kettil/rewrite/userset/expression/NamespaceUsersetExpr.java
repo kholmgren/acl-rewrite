@@ -11,10 +11,10 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class NamespaceUsersetExpr extends UsersetExpr {
     String name;
-    Map<String, UsersetExpr> relations;
+    Map<String, RelationUsersetExpr> relations;
 
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
-        return visitor.visitNamespaceExpr(this);
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visitNamespaceUsersetExpr(this);
     }
 }

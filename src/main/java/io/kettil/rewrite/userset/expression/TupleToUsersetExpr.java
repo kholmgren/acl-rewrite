@@ -14,7 +14,7 @@ public class TupleToUsersetExpr extends UsersetExpr {
     ComputedUsersetExpr computedUserset;
 
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitTupleToUsersetExpr(this);
     }
 }

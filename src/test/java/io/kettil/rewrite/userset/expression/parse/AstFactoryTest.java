@@ -14,8 +14,10 @@ public class AstFactoryTest {
     public void parse() throws Exception {
         JsonNode expected = MAPPER.readTree(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"));
 
-        NamespaceAst namespace = AstFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
+        NamespaceAst namespace = NamespaceAstFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
         JsonNode actual = MAPPER.convertValue(namespace, JsonNode.class);
+
+        System.out.println("---" + actual.toPrettyString());
 
         assertEquals(expected, actual);
     }

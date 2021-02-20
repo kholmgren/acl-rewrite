@@ -5,15 +5,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Value;
 
 @Value
-@JsonPropertyOrder({"@type", "namespace", "object", "relation"})
+@JsonPropertyOrder({"@type", "name", "rewrite"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class TuplesetExpr extends UsersetExpr {
-    String namespace;
-    String object;
-    String relation;
+public class RelationUsersetExpr extends UsersetExpr {
+    String name;
+    UsersetExpr rewrite;
 
     @Override
     public <T> T accept(Visitor<T> visitor) {
-        return visitor.visitTuplesetExpr(this);
+        return visitor.visitRelationUsersetExpr(this);
     }
 }

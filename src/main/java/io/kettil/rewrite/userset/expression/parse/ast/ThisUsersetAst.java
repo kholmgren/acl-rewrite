@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class ThisUsersetAst extends RewriteAst {
 
     @Override
-    public <T> T accept(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitThisUsersetAst(this);
     }
 }

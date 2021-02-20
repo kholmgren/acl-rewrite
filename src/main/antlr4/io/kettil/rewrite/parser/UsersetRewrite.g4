@@ -25,7 +25,19 @@ childUserset
     ;
 
 computedUserset
-    : 'computed_userset' '{' (objectRef | relationRef)+ '}'
+    : 'computed_userset' '{' (usersetNamespaceRef | usersetObjectRef | usersetRelationRef)+ '}'
+    ;
+
+usersetNamespaceRef
+    : 'namespace' ':' ref=(STRING | TUPLE_USERSET_NAMESPACE)
+    ;
+
+usersetObjectRef
+    : 'object' ':' ref=(STRING | TUPLE_USERSET_OBJECT)
+    ;
+
+usersetRelationRef
+    : 'relation' ':' ref=(STRING | TUPLE_USERSET_RELATION)
     ;
 
 thisUserset
@@ -37,19 +49,39 @@ tupleToUserset
     ;
 
 tupleset
-    : 'tupleset' '{' (objectRef | relationRef)+ '}'
+    : 'tupleset' '{' (namespaceRef | objectRef | relationRef)+ '}'
     ;
 
-setOperationUserset
-    : op=('union' | 'intersect' | 'exclude') '{' userset* '}'
+namespaceRef
+    : 'namespace' ':' ref=STRING
     ;
 
 objectRef
-    : 'object' ':' ref=(STRING | TUPLE_USERSET_OBJECT)
+    : 'object' ':' ref=STRING
     ;
 
 relationRef
-    : 'relation' ':' ref=(STRING | TUPLE_USERSET_RELATION)
+    : 'relation' ':' ref=STRING
+    ;
+
+setOperationUserset
+    : op=(UNION | INTERSECT | EXCLUDE) '{' userset* '}'
+    ;
+
+UNION
+    : 'union'
+    ;
+
+INTERSECT
+    : 'intersect'
+    ;
+
+EXCLUDE
+    : 'exclude'
+    ;
+
+TUPLE_USERSET_NAMESPACE
+    : '$TUPLE_USERSET_NAMESPACE'
     ;
 
 TUPLE_USERSET_OBJECT

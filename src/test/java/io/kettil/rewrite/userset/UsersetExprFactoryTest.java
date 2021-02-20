@@ -9,7 +9,7 @@ public class UsersetExprFactoryTest {
 
     @Test
     public void build() throws Exception {
-        NamespaceUsersetExpr namespaceConfig = UsersetExprFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule_build_test.txt"));
+        NamespaceUsersetExpr namespaceConfig = NamespaceConfigExprFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule_build_test.txt"));
 
 
         System.out.println(MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(namespaceConfig));

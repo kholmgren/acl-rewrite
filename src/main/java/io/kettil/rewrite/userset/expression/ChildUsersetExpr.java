@@ -11,7 +11,7 @@ public class ChildUsersetExpr extends UsersetExpr {
     UsersetExpr userset;
 
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitChildUsersetExpr(this);
     }
 }

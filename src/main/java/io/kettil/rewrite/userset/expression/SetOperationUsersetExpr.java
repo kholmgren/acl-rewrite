@@ -10,17 +10,11 @@ import java.util.List;
 @JsonPropertyOrder({"@type", "op", "children"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class SetOperationUsersetExpr extends UsersetExpr {
-    public enum Op {
-        Union,
-        Intersect,
-        Exclude
-    }
-
-    Op op;
+    SetOp op;
     List<UsersetExpr> children;
 
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitSetOperationExpr(this);
     }
 }

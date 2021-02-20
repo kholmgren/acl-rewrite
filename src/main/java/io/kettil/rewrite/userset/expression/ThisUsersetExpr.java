@@ -9,7 +9,7 @@ import lombok.Value;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ThisUsersetExpr extends UsersetExpr {
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitThisUsersetExpr(this);
     }
 }

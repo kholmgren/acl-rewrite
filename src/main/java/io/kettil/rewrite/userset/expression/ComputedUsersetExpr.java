@@ -5,14 +5,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Value;
 
 @Value
-@JsonPropertyOrder({"@type", "object","relation"})
+@JsonPropertyOrder({"@type", "namespace", "object", "relation"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ComputedUsersetExpr extends UsersetExpr {
+    String namespace;
     String object;
     String relation;
 
     @Override
-    public <T> T accept(UsersetExprVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitComputedUsersetExpr(this);
     }
 }

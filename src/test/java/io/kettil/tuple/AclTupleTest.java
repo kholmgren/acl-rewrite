@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TupleTest {
+public class AclTupleTest {
     @Test
     public void parse() {
         String[] tuples = {
@@ -14,13 +14,6 @@ public class TupleTest {
             "doc:readme#viewer@group:eng#member", //Members of group:eng are viewers of doc:readme
             "doc:readme#parent@folder:A#...", //doc:readme is in folder:A
         };
-
-//        Tuple[] expected = {
-//            new Tuple(new TupleObject("doc", "readme"), "owner", new TupleUser("10", null)),
-//            new Tuple(new TupleObject("group", "eng"), "member", new TupleUser("11", null)),
-//            new Tuple(new TupleObject("doc", "readme"), "viewer", new TupleUser(null, new TupleUserset(new TupleObject("group", "eng"), "member"))),
-//            new Tuple(new TupleObject("doc", "readme"), "parent", new TupleUser(null, new TupleUserset(new TupleObject("folder", "A"), "..."))),
-//        };
 
         AclRelation[] expected = {
             new AclRelation("doc", "readme", "owner", "10"),
@@ -31,9 +24,8 @@ public class TupleTest {
 
 
         for (int i = 0; i < tuples.length; i++) {
-            AclRelation relation = AclRelation.parse(tuples[i]);
-            assertEquals(expected[i], relation);
+            AclRelation t = AclRelation.parse(tuples[i]);
+            assertEquals(expected[i], t);
         }
     }
-
 }

@@ -62,7 +62,7 @@
                   "@type": "tupleset",
                   "relation": "parent"
                 },
-                "computedUserset": {
+                "computed_userset": {
                   "@type": "computed_userset",
                   "object": "$TUPLE_USERSET_OBJECT",
                   "relation": "viewer"

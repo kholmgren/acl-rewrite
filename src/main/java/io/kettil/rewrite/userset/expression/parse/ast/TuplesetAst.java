@@ -2,21 +2,18 @@ package io.kettil.rewrite.userset.expression.parse.ast;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonPropertyOrder({"@type", "object", "relation"})
+@Value
+@JsonPropertyOrder({"@type", "namespace", "object", "relation"})
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TuplesetAst extends RewriteAst {
-    private String object;
-    private String relation;
+    String namespace;
+    String object;
+    String relation;
 
     @Override
-    public <T> T accept(RewriteAstVisitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visitTuplesetAst(this);
     }
 }

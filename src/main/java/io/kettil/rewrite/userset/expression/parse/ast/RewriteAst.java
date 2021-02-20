@@ -16,5 +16,26 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = UsersetRewriteAst.class, name = "userset_rewrite")
 })
 public abstract class RewriteAst {
-    public abstract <T> T accept(RewriteAstVisitor<T> visitor);
+    public abstract <T> T accept(Visitor<T> visitor);
+
+    public interface Visitor<T> {
+
+        T visitNamespaceAst(NamespaceAst ast);
+
+        T visitRelationAst(RelationAst ast);
+
+        T visitUsersetRewriteAst(UsersetRewriteAst ast);
+
+        T visitChildUsersetAst(ChildUsersetAst ast);
+
+        T visitComputedUsersetAst(ComputedUsersetAst ast);
+
+        T visitThisUsersetAst(ThisUsersetAst ast);
+
+        T visitTupleToUsersetAst(TupleToUsersetAst ast);
+
+        T visitTuplesetAst(TuplesetAst ast);
+
+        T visitSetOperationUsersetAst(SetOperationUsersetAst ast);
+    }
 }
