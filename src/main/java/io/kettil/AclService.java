@@ -50,21 +50,4 @@ public class AclService {
     public void removeRelation(AclRelation relation) {
         relations.remove(relation);
     }
-
-//    public Set<String> getUserIds(AclKey object) {
-//        Stack<AclTuple> relations = new Stack<>();
-//        relations.addAll(getRelations(object));
-//
-//        Set<String> userIds = new TreeSet<>();
-//
-//        while (!relations.empty()) {
-//            AclKey user = relations.pop().getUser();
-//            if (user.idOnly())
-//                userIds.add(user.getId());
-//            else
-//                relations.addAll(getRelations(user));
-//        }
-//
-//        return userIds;
-//    }
 }

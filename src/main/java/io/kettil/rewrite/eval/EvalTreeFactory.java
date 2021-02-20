@@ -35,7 +35,26 @@ public class EvalTreeFactory {
 
         @Override
         public EvalTree visitChildUsersetExpr(ChildUsersetExpr expr) {
-            return null;
+            EvalTree eval = expr.getUserset().accept(this);
+
+            Stack<AclRelation> relations = new Stack<>();
+            relations.addAll(eval.getResult().stream()
+                .flatMap(i -> service.getRelations(i).stream())
+                .collect(toList()));
+
+            Set<AclKey> result = new TreeSet<>();
+            while (!relations.empty()) {
+                AclKey user = relations.pop().getUser();
+                if (user.idOnly())
+                    result.add(user);
+                else
+                    relations.addAll(service.getRelations(user));
+            }
+
+            return new EvalTree(
+                expr,
+                singletonList(eval),
+                result);
         }
 
         @Override
