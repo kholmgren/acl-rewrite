@@ -1,11 +1,10 @@
-package io.kettil.tuple;
+package io.kettil;
 
-import io.kettil.AclRelation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AclTupleTest {
+public class AclRelationTest {
     @Test
     public void parse() {
         String[] tuples = {
@@ -22,10 +21,10 @@ public class AclTupleTest {
             new AclRelation("doc", "readme", "parent", "folder", "A", "..."),
         };
 
-
         for (int i = 0; i < tuples.length; i++) {
-            AclRelation t = AclRelation.parse(tuples[i]);
-            assertEquals(expected[i], t);
+            AclRelation relation = AclRelation.parse(tuples[i]);
+            assertEquals(expected[i], relation);
         }
     }
+
 }

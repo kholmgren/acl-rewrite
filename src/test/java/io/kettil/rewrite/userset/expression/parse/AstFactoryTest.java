@@ -12,13 +12,20 @@ public class AstFactoryTest {
 
     @Test
     public void parse() throws Exception {
-        JsonNode expected = MAPPER.readTree(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"));
+        MAPPER.readValue(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"), NamespaceAst.class);
+        JsonNode expectedJson = MAPPER.readTree(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"));
 
-        NamespaceAst namespace = NamespaceAstFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
-        JsonNode actual = MAPPER.convertValue(namespace, JsonNode.class);
+        NamespaceAst actualNamespace = NamespaceAstFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
+        JsonNode actualJson = MAPPER.convertValue(actualNamespace, JsonNode.class);
 
-        System.out.println("---" + actual.toPrettyString());
+        assertEquals(expectedJson, actualJson);
+    }
 
-        assertEquals(expected, actual);
+    @Test
+    public void deserialize() throws Exception {
+        NamespaceAst expectedNamespaceAst = MAPPER.readValue(getClass().getClassLoader().getResourceAsStream("rewrite_rule_expected.json"), NamespaceAst.class);
+        NamespaceAst actualNamespaceAst = NamespaceAstFactory.parse(getClass().getClassLoader().getResourceAsStream("rewrite_rule.txt"));
+
+        assertEquals(expectedNamespaceAst, actualNamespaceAst);
     }
 }
